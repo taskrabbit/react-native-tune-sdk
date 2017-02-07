@@ -1,3 +1,5 @@
+*NOTE: The TUNE React Native SDK Bridge is currently in Alpha, and has not been verified for production use.  Use at your own risk.  If you wish to use it, please contact support@tune.com for more information.*
+
 TUNE SDK Bridge
 =============
 The **TUNE SDK Bridge** provides a React Native interface to the native TUNE SDK methods for
