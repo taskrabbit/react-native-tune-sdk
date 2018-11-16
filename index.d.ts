@@ -1,28 +1,28 @@
 declare interface Location {
-  description: string;
-  latitude: number;
-  longitude: number;
+  description?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 declare interface EventItem {
-  itemName: string;
-  unitPrice: number;
-  quantity: number;
-  revenue: number;
-  attribute1: string;
-  attribute2: string;
-  attribute3: string;
-  attribute4: string;
-  attribute5: string;
+  itemName?: string;
+  unitPrice?: number;
+  quantity?: number;
+  revenue?: number;
+  attribute1?: string;
+  attribute2?: string;
+  attribute3?: string;
+  attribute4?: string;
+  attribute5?: string;
 }
 
 declare interface Date {
-  day: number;
-  month: number;
-  year: number;
+  day?: number;
+  month?: number;
+  year?: number;
 }
 
-export class TuneSDK {
+export default class TuneSDK {
   /***
    * Track an share event
    * @param  {String} id           The User Id
@@ -45,13 +45,13 @@ export class TuneSDK {
     gender,
     location
   }: {
-    id: string;
-    userIdType: string;
-    email: string;
-    name: string;
-    age: number;
-    gender: string;
-    location: Location;
+    id?: string;
+    userIdType?: string;
+    email?: string;
+    name?: string;
+    age?: number;
+    gender?: string;
+    location?: Location;
   }): void;
 
   /***
@@ -76,13 +76,13 @@ export class TuneSDK {
     gender,
     location
   }: {
-    id: string;
-    userIdType: string;
-    email: string;
-    name: string;
-    age: number;
-    gender: string;
-    location: Location;
+    id?: string;
+    userIdType?: string;
+    email?: string;
+    name?: string;
+    age?: number;
+    gender?: string;
+    location?: Location;
   }): void;
 
   // eCommerce
@@ -123,14 +123,14 @@ export class TuneSDK {
     location,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    gender: string;
-    age: number;
-    revenue: number;
-    currencyCode: string;
-    location: Location;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    gender?: string;
+    age?: number;
+    revenue?: number;
+    currencyCode?: string;
+    location?: Location;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -163,11 +163,11 @@ export class TuneSDK {
     location,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    currencyCode: string;
-    location: Location;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    currencyCode?: string;
+    location?: Location;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -179,8 +179,8 @@ export class TuneSDK {
     id,
     userIdType
   }: {
-    id: string;
-    userIdType: string;
+    id?: string;
+    userIdType?: string;
   }): void;
 
   /***
@@ -216,13 +216,13 @@ export class TuneSDK {
     advertiserRefId: location,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    revenue: number;
-    currencyCode: string;
-    advertiserRefId: string;
-    location: Location;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    revenue?: number;
+    currencyCode?: string;
+    advertiserRefId?: string;
+    location?: Location;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -258,13 +258,13 @@ export class TuneSDK {
     location,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    revenue: number;
-    currencyCode: string;
-    advertiserRefId: string;
-    location: Location;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    revenue?: number;
+    currencyCode?: string;
+    advertiserRefId?: string;
+    location?: Location;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -316,17 +316,17 @@ export class TuneSDK {
     date1,
     date2
   }: {
-    id: string;
-    userIdType: string;
-    gender: string;
-    age: number;
-    revenue: number;
-    quantity: number;
-    currencyCode: string;
-    advertiserRefId: string;
-    location: Location;
-    date1: Date;
-    date2: Date;
+    id?: string;
+    userIdType?: string;
+    gender?: string;
+    age?: number;
+    revenue?: number;
+    quantity?: number;
+    currencyCode?: string;
+    advertiserRefId?: string;
+    location?: Location;
+    date1?: Date;
+    date2?: Date;
   }): void;
 
   /***
@@ -373,15 +373,15 @@ export class TuneSDK {
     date2,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    quantity: number;
-    currencyCode: string;
-    searchString: string;
-    location: Location;
-    date1: Date;
-    date2: Date;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    quantity?: number;
+    currencyCode?: string;
+    searchString?: string;
+    location?: Location;
+    date1?: Date;
+    date2?: Date;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -414,11 +414,11 @@ export class TuneSDK {
     location,
     eventItems
   }: {
-    id: string;
-    userIdType: string;
-    currencyCode: string;
-    location: Location;
-    eventItems: Array<EventItem>;
+    id?: string;
+    userIdType?: string;
+    currencyCode?: string;
+    location?: Location;
+    eventItems?: Array<EventItem>;
   }): void;
 
   /***
@@ -432,9 +432,9 @@ export class TuneSDK {
     userIdType,
     contentId
   }: {
-    id: string;
-    userIdType: string;
-    contentId: number;
+    id?: string;
+    userIdType?: string;
+    contentId?: number;
   }): void;
 
   /***
@@ -448,9 +448,9 @@ export class TuneSDK {
     userIdType,
     level
   }: {
-    id: string;
-    userIdType: string;
-    level: number;
+    id?: string;
+    userIdType?: string;
+    level?: number;
   }): void;
 
   /***
@@ -464,9 +464,9 @@ export class TuneSDK {
     userIdType,
     credits
   }: {
-    id: string;
-    userIdType: string;
-    credits: number;
+    id?: string;
+    userIdType?: string;
+    credits?: number;
   }): void;
 
   /***
@@ -478,8 +478,8 @@ export class TuneSDK {
     id,
     userIdType
   }: {
-    id: string;
-    userIdType: string;
+    id?: string;
+    userIdType?: string;
   }): void;
 
   /***
@@ -487,7 +487,7 @@ export class TuneSDK {
    * @param  {String} id           The User Id
    * @param  {String} userIdType   The User Id type : facebook, twitter, google or user
    */
-  static invite({ id, userIdType }: { id: string; userIdType: string }): void;
+  static invite({ id, userIdType }: { id?: string; userIdType?: string }): void;
 
   /***
    * Track an rating event
@@ -503,10 +503,10 @@ export class TuneSDK {
     rating,
     contentId
   }: {
-    id: string;
-    userIdType: string;
-    rating: number;
-    contentId: string;
+    id?: string;
+    userIdType?: string;
+    rating?: number;
+    contentId?: string;
   }): void;
 
   /***
@@ -514,7 +514,7 @@ export class TuneSDK {
    * @param  {String} id            The User Id
    * @param  {String} userIdType    The User Id type : facebook, twitter, google or user
    */
-  static share({ id, userIdType }: { id: string; userIdType: string }): void;
+  static share({ id, userIdType }: { id?: string; userIdType?: string }): void;
 
   /**
    * @param  {String} name of the custom geolocation for the profile
@@ -524,8 +524,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: string;
+    name?: string;
+    value?: string;
   }): void;
 
   /**
@@ -539,8 +539,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: Date;
+    name?: string;
+    value?: Date;
   }): void;
 
   /**
@@ -551,8 +551,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: number;
+    name?: string;
+    value?: number;
   }): void;
 
   /**
@@ -566,8 +566,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: Location;
+    name?: string;
+    value?: Location;
   }): void;
 
   /**
@@ -578,8 +578,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: string;
+    name?: string;
+    value?: string;
   }): void;
 
   /**
@@ -593,8 +593,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: Date;
+    name?: string;
+    value?: Date;
   }): void;
 
   /**
@@ -605,8 +605,8 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: number;
+    name?: string;
+    value?: number;
   }): void;
 
   /**
@@ -620,20 +620,20 @@ export class TuneSDK {
     name,
     value
   }: {
-    name: string;
-    value: Location;
+    name?: string;
+    value?: Location;
   }): void;
 
   /**
    * @param  {String} name of the custom variable to clear
    */
-  static clearCustomProfileVairable(name: string): void;
+  static clearCustomProfileVairable(name?: string): void;
 
   //
   static clearAllCustomProfileVariables(): void;
 
   // Power Hooks RETURNS A PROMISE
   static getPowerHookValues(
-    hookIds: Array<any>
+    hookIds?: Array<any>
   ): Promise<{ [key: string]: string }>;
 }
