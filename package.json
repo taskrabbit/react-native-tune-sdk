@@ -28,6 +28,7 @@
   ],
   "author": "Zola Richards",
   "license": "ISC",
+  "typings": "index.d.ts",
   "devDependencies": {
     "react": "^15.4.2",
     "react-native": "^0.40.0"
