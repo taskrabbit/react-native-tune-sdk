@@ -17,6 +17,17 @@ const TuneSDKBridge = NativeModules.TuneSDKBridge;
 class TuneSDK {
 
   /***
+   * Track a custom event
+   * @param  {String} id           The User Id
+   * @param  {String} userIdType   The User Id type : facebook, twitter, google or user
+   * @param  {Object} tuneEvent    The Event Object
+   */
+  static measureEvent({id = '', userIdType = '', tuneEvent = {}}) {
+    if (!tuneEvent) return;
+    TuneSDKBridge.measureEvent(id, userIdType, tuneEvent);
+  }
+
+  /***
    * Track an share event
    * @param  {String} id           The User Id
    * @param  {String} userIdType   The User Id type : facebook, twitter, google or user

@@ -1,10 +1,10 @@
-declare interface Location {
+export declare interface Location {
   description?: string;
   latitude?: number;
   longitude?: number;
 }
 
-declare interface EventItem {
+export declare interface EventItem {
   itemName?: string;
   unitPrice?: number;
   quantity?: number;
@@ -16,13 +16,85 @@ declare interface EventItem {
   attribute5?: string;
 }
 
-declare interface Date {
+export declare interface DateObj {
   day?: number;
   month?: number;
   year?: number;
 }
 
+// Receipt and InAppReceipt defined: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW1
+export declare interface Receipt {
+  bundle_id?: string;
+  application_version?: string;
+  in_app?: Array<InAppReceipt>;
+  original_application_version?: string;
+  receipt_creation_date?: string;
+  expiration_date?: string;
+}
+
+export declare interface InAppReceipt {
+  quantity?: number;
+  product_id?: string;
+  transaction_id?: string;
+  original_transaction_id?: string;
+  purchase_date?: string;
+  original_purchase_date?: string;
+  expires_date?: string;
+  expiration_intent?: string;
+  is_in_billing_retry_period?: string;
+  is_trial_period?: string;
+  is_in_intro_offer_period?: string;
+  cancellation_date?: string;
+  cancellation_reason?: string;
+  app_item_id?: string;
+  version_external_identifier?: string;
+  web_order_line_item_id?: string;
+  auto_renew_status?: string;
+  auto_renew_product_id?: string;
+  price_consent_status?: string;
+}
+
+export declare interface TuneEvent {
+  eventName: string;
+  eventId?: number;
+  eventItems?: Array<EventItem>;
+  revenue?: number;
+  currencyCode?: string;
+  refId?: string;
+  receipt?: Receipt;
+  contentType?: string;
+  contentId?: string;
+  searchString?: string;
+  transactionState?: number;
+  rating?: number;
+  level?: number;
+  quantity?: number;
+  date1?: DateObj;
+  date2?: DateObj;
+  attribute1?: string;
+  attribute2?: string;
+  attribute3?: string;
+  attribute4?: string;
+  attribute5?: string;
+}
+
 export default class TuneSDK {
+  /***
+   * Track a custom event
+   * @param  {String} id           The User Id
+   * @param  {String} userIdType   The User Id type : facebook, twitter, google or user
+   * @param  {Object} tuneEvent    The TuneEvent object
+   */
+  static measureEvent({
+    id,
+    userIdType,
+    tuneEvent
+  }: {
+    id?: string;
+    userIdType?: string;
+    tuneEvent: TuneEvent;
+  }): void;
+
   /***
    * Track an share event
    * @param  {String} id           The User Id
@@ -113,7 +185,7 @@ export default class TuneSDK {
    *      @param  {String} attribute5
    *    }
    */
-  static addToCard({
+  static addToCart({
     id,
     userIdType,
     gender,
@@ -325,8 +397,8 @@ export default class TuneSDK {
     currencyCode?: string;
     advertiserRefId?: string;
     location?: Location;
-    date1?: Date;
-    date2?: Date;
+    date1?: DateObj;
+    date2?: DateObj;
   }): void;
 
   /***
@@ -379,8 +451,8 @@ export default class TuneSDK {
     currencyCode?: string;
     searchString?: string;
     location?: Location;
-    date1?: Date;
-    date2?: Date;
+    date1?: DateObj;
+    date2?: DateObj;
     eventItems?: Array<EventItem>;
   }): void;
 
@@ -540,7 +612,7 @@ export default class TuneSDK {
     value
   }: {
     name?: string;
-    value?: Date;
+    value?: DateObj;
   }): void;
 
   /**

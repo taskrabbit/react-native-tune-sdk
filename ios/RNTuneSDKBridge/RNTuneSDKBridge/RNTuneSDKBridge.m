@@ -135,6 +135,41 @@
     return item;
 }
 
+-(TuneEvent *)getTuneEvent:(NSDictionary *)event {
+    NSNumber *revenue  = [RCTConvert NSNumber:event[@"revenue"]];
+    NSNumber *rating   = [RCTConvert NSNumber:event[@"rating"]];
+    NSNumber *quantity = [RCTConvert NSNumber:event[@"quantity"]];
+    NSNumber *transactionState = [RCTConvert NSNumber:event[@"transactionState"]];
+    NSNumber *level = [RCTConvert NSNumber:event[@"level"]];
+    NSString *eventName = [RCTConvert NSString:event[@"eventName"]];
+
+    TuneEvent *tEvent = [TuneEvent eventWithName:eventName];
+
+    tEvent.eventItems = [self getEventItems:event[@"eventItems"]];
+    tEvent.date1 = [self getDateObject:event[@"date1"]];
+    tEvent.date2 = [self getDateObject:event[@"date2"]];
+
+    tEvent.revenue = revenue.floatValue;
+    tEvent.rating = rating.floatValue;
+    tEvent.quantity = quantity.integerValue;
+    tEvent.transactionState = transactionState.integerValue;
+    tEvent.level = level.integerValue;
+
+    tEvent.currencyCode = [RCTConvert NSString:event[@"currencyCode"]];
+    tEvent.refId = [RCTConvert NSString:event[@"refId"]];
+    tEvent.receipt = [RCTConvert NSData:event[@"receipt"]];
+    tEvent.contentType = [RCTConvert NSString:event[@"contentType"]];
+    tEvent.contentId = [RCTConvert NSString:event[@"contentId"]];
+    tEvent.searchString = [RCTConvert NSString:event[@"searchString"]];
+    attribute1:[RCTConvert NSString:event[@"attribute1"]];
+    attribute2:[RCTConvert NSString:event[@"attribute2"]];
+    attribute3:[RCTConvert NSString:event[@"attribute3"]];
+    attribute4:[RCTConvert NSString:event[@"attribute4"]];
+    attribute5:[RCTConvert NSString:event[@"attribute5"]];
+
+    return tEvent;
+}
+
 -(NSArray *)getEventItems:(NSArray *)eventItems {
     NSMutableArray *events;
 
@@ -183,6 +218,19 @@
 
 // START OF THE BRIDGED OVER METHODS
 RCT_EXPORT_MODULE(TuneSDKBridge);
+
+RCT_EXPORT_METHOD(measureEvent:(nonnull NSString *)id
+                  userIdType:(nonnull NSString *)userIdType
+                  tuneEvent:(NSDictionary *)tuneEvent)
+{
+    if (!tuneEvent) {
+      return;
+    }
+
+    [ self setTuneUserType:id type:userIdType];
+    TuneEvent *event = [self getTuneEvent:tuneEvent];
+    [Tune measureEvent:event];
+}
 
 RCT_EXPORT_METHOD(login:(nonnull NSString *)id
                   userIdType:(nonnull NSString *)userIdType
