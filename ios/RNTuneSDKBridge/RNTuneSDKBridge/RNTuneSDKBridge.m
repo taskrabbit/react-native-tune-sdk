@@ -122,7 +122,7 @@
     NSNumber *quantity  = [RCTConvert NSNumber:event[@"quantity"]];
     NSNumber *revenue   = [RCTConvert NSNumber:event[@"revenue"]];
 
-    TuneEventItem *item = [TuneEventItem eventItemWithName:[RCTConvert NSString:event[@"name"]]
+    TuneEventItem *item = [TuneEventItem eventItemWithName:[RCTConvert NSString:event[@"itemName"]]
                                         unitPrice:unitPrice.floatValue
                                         quantity:quantity.integerValue
                                         revenue:revenue.floatValue
