@@ -231,7 +231,8 @@ RCT_EXPORT_METHOD(measureEvent:(nonnull NSString *)id
       return;
     }
 
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
+    
     TuneEvent *event = [self getTuneEvent:tuneEvent];
     [Tune measureEvent:event];
 }
