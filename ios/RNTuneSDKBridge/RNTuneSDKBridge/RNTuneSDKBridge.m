@@ -26,6 +26,10 @@
 
 @implementation RNTuneSDKBridge {}
 
++ (BOOL)requiresMainQueueSetup {
+	return true;
+}
+
 - (instancetype)init
 {
     if ((self = [super init])) {
