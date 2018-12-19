@@ -10,20 +10,20 @@
 #import "TuneLocation.h"
 #import "UIViewController+NameTag.h"
 
-#import <React/RCTLog.h>
-#import <React/RCTConvert.h>
 #import "RNTuneSDKBridge.h"
+#import <React/RCTConvert.h>
+#import <React/RCTLog.h>
 
 @implementation RNTuneSDKBridge {}
 
 // START OF THE BRIDGED HELPER METHODS
 - (void)setTuneUserType:(NSString *)id type:(NSString *)type {
 
-    if ([type isEqualToString:@"facebook"]){
+    if ([type isEqualToString:@"facebook"]) {
         [Tune setFacebookUserId:id];
-    } else if([type isEqualToString:@"google"]) {
+    } else if ([type isEqualToString:@"google"]) {
         [Tune setGoogleUserId:id];
-    } else if([type isEqualToString:@"twitter"]) {
+    } else if ([type isEqualToString:@"twitter"]) {
         [Tune setTwitterUserId:id];
     } else {
         [Tune setUserId:id];
@@ -31,7 +31,7 @@
 }
 
 - (void)setTuneGender:(NSString *)gender {
-    if([gender isEqualToString:@"MALE"]) {
+    if ([gender isEqualToString:@"MALE"]) {
         [Tune setGender:TuneGenderMale];
     } else {
         [Tune setGender:TuneGenderFemale];
@@ -43,20 +43,19 @@
     NSNumber *latitude;
     NSNumber *longitude;
 
-    if ((latitude=[location objectForKey:@"latitude"])) {
+    if ((latitude = [location objectForKey:@"latitude"])) {
         latitude = [RCTConvert NSNumber:location[@"latitude"]];
     }
 
-    if ((longitude=[location objectForKey:@"longitude"])) {
+    if ((longitude = [location objectForKey:@"longitude"])) {
         longitude = [RCTConvert NSNumber:location[@"longitude"]];
     }
 
-
-    if ((altitude=[location objectForKey:@"altitude"])) {
+    if ((altitude = [location objectForKey:@"altitude"])) {
         altitude = [RCTConvert NSNumber:location[@"altitude"]];
     }
 
-	[Tune setLocationWithLatitude:latitude longitude:longitude altitude:altitude];
+    [Tune setLocationWithLatitude:latitude longitude:longitude altitude:altitude];
 }
 
 - (TuneLocation *)getTuneLocation:(NSDictionary *)location {
@@ -66,18 +65,17 @@
 
     TuneLocation *loc = [TuneLocation new];
 
-    if ((latitude=[location objectForKey:@"latitude"])) {
+    if ((latitude = [location objectForKey:@"latitude"])) {
         latitude = [RCTConvert NSNumber:location[@"latitude"]];
         loc.latitude = latitude;
     }
 
-    if ((longitude=[location objectForKey:@"longitude"])) {
+    if ((longitude = [location objectForKey:@"longitude"])) {
         longitude = [RCTConvert NSNumber:location[@"longitude"]];
         loc.longitude = longitude;
     }
 
-
-    if ((altitude=[location objectForKey:@"altitude"])) {
+    if ((altitude = [location objectForKey:@"altitude"])) {
         altitude = [RCTConvert NSNumber:location[@"altitude"]];
         loc.altitude = altitude;
     }
@@ -85,27 +83,26 @@
     return loc;
 }
 
--(TuneEventItem *)getEventItem:(NSDictionary *)event {
+- (TuneEventItem *)getEventItem:(NSDictionary *)event {
     NSNumber *unitPrice = [RCTConvert NSNumber:event[@"unitPrice"]];
-    NSNumber *quantity  = [RCTConvert NSNumber:event[@"quantity"]];
-    NSNumber *revenue   = [RCTConvert NSNumber:event[@"revenue"]];
+    NSNumber *quantity = [RCTConvert NSNumber:event[@"quantity"]];
+    NSNumber *revenue = [RCTConvert NSNumber:event[@"revenue"]];
 
     TuneEventItem *item = [TuneEventItem eventItemWithName:[RCTConvert NSString:event[@"itemName"]]
-                                        unitPrice:unitPrice.floatValue
-                                        quantity:quantity.integerValue
-                                        revenue:revenue.floatValue
-                                        attribute1:[RCTConvert NSString:event[@"attribute1"]]
-                                        attribute2:[RCTConvert NSString:event[@"attribute2"]]
-                                        attribute3:[RCTConvert NSString:event[@"attribute3"]]
-                                        attribute4:[RCTConvert NSString:event[@"attribute4"]]
-                                        attribute5:[RCTConvert NSString:event[@"attribute5"]]
-                           ];
+                                                 unitPrice:unitPrice.floatValue
+                                                  quantity:quantity.integerValue
+                                                   revenue:revenue.floatValue
+                                                attribute1:[RCTConvert NSString:event[@"attribute1"]]
+                                                attribute2:[RCTConvert NSString:event[@"attribute2"]]
+                                                attribute3:[RCTConvert NSString:event[@"attribute3"]]
+                                                attribute4:[RCTConvert NSString:event[@"attribute4"]]
+                                                attribute5:[RCTConvert NSString:event[@"attribute5"]]];
     return item;
 }
 
--(TuneEvent *)getTuneEvent:(NSDictionary *)event {
-    NSNumber *revenue  = [RCTConvert NSNumber:event[@"revenue"]];
-    NSNumber *rating   = [RCTConvert NSNumber:event[@"rating"]];
+- (TuneEvent *)getTuneEvent:(NSDictionary *)event {
+    NSNumber *revenue = [RCTConvert NSNumber:event[@"revenue"]];
+    NSNumber *rating = [RCTConvert NSNumber:event[@"rating"]];
     NSNumber *quantity = [RCTConvert NSNumber:event[@"quantity"]];
     NSNumber *transactionState = [RCTConvert NSNumber:event[@"transactionState"]];
     NSNumber *level = [RCTConvert NSNumber:event[@"level"]];
@@ -143,18 +140,16 @@
     NSMutableArray *events = [NSMutableArray array];
 
     for (NSDictionary *item in eventItems) {
-        [events addObject:[ self getEventItem:item]];
+        [events addObject:[self getEventItem:item]];
     }
 
     return events;
 }
 
--(NSDate *)getDateObject:(NSDictionary *)dateDic {
+- (NSDate *)getDateObject:(NSDictionary *)dateDic {
     NSNumber *day = [RCTConvert NSNumber:dateDic[@"day"]];
-    NSNumber *year  = [RCTConvert NSNumber:dateDic[@"year"]];
-    NSNumber *month   = [RCTConvert NSNumber:dateDic[@"month"]];
-
-
+    NSNumber *year = [RCTConvert NSNumber:dateDic[@"year"]];
+    NSNumber *month = [RCTConvert NSNumber:dateDic[@"month"]];
 
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     [comps setDay:day.integerValue];
@@ -174,15 +169,13 @@ RCT_EXPORT_METHOD(measureEvent:(nonnull NSString *)id
                   userIdType:(nonnull NSString *)userIdType
                   tuneEvent:(NSDictionary *)tuneEvent)
 {
-	NSLog(@"fbarthofbartho: measureEventCalled");
     if (!tuneEvent) {
-      return;
+        return;
     }
 
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [self getTuneEvent:tuneEvent];
     [Tune measureEvent:event];
-	NSLog(@"fbarthofbartho: measureEvent %@", event);
 }
 
 RCT_EXPORT_METHOD(login:(nonnull NSString *)id
@@ -196,9 +189,9 @@ RCT_EXPORT_METHOD(login:(nonnull NSString *)id
     [Tune setAge:age.intValue];
     [Tune setUserName:name];
     [Tune setUserEmail:email];
-    [ self setTuneGender:gender];
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneGender:gender];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
 
     [Tune measureEventName:TUNE_EVENT_LOGIN];
 }
@@ -214,12 +207,11 @@ RCT_EXPORT_METHOD(registration:(nonnull NSString *)id
     [Tune setAge:age.intValue];
     [Tune setUserName:name];
     [Tune setUserEmail:email];
-    [ self setTuneGender:gender];
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneGender:gender];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
 
     [Tune measureEventName:TUNE_EVENT_REGISTRATION];
-
 }
 
 RCT_EXPORT_METHOD(addToCart:(nonnull NSString *)id
@@ -233,12 +225,12 @@ RCT_EXPORT_METHOD(addToCart:(nonnull NSString *)id
 {
 
     [Tune setAge:age.intValue];
-    [ self setTuneGender:gender];
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneGender:gender];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
 
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_ADD_TO_CART];
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
     event.revenue = revenue.floatValue;
     event.currencyCode = currencyCode;
 
@@ -251,19 +243,19 @@ RCT_EXPORT_METHOD(addToWishList:(nonnull NSString *)id
                   location:(nonnull NSDictionary *)location
                   eventItems:(nonnull NSArray *)eventItems)
 {
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
 
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_ADD_TO_WISHLIST];
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
     event.currencyCode = currencyCode;
 
     [Tune measureEvent:event];
 }
 
 // (String id,String userIdType)
-RCT_EXPORT_METHOD(addedPaymentInfo:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType) {
-    [ self setTuneUserType:id type:userIdType];
+RCT_EXPORT_METHOD(addedPaymentInfo : (nonnull NSString *)id userIdType : (nonnull NSString *)userIdType) {
+    [self setTuneUserType:id type:userIdType];
     [Tune measureEventName:TUNE_EVENT_ADDED_PAYMENT_INFO];
 }
 
@@ -276,17 +268,16 @@ RCT_EXPORT_METHOD(checkoutInitiated:(nonnull NSString *)id
                   eventItems:(nonnull NSArray *)eventItems)
 {
 
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
 
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_CHECKOUT_INITIATED];
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
     event.refId = advertiserRefId;
     event.revenue = revenue.floatValue;
     event.currencyCode = currencyCode;
 
     [Tune measureEvent:event];
-
 }
 
 RCT_EXPORT_METHOD(purchase:(nonnull NSString *)id
@@ -297,10 +288,10 @@ RCT_EXPORT_METHOD(purchase:(nonnull NSString *)id
                   location:(NSDictionary *)location
                   eventItems:(nonnull NSArray *)eventItems)
 {
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_PURCHASE];
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
     event.refId = advertiserRefId;
     event.revenue = revenue.floatValue;
     event.currencyCode = currencyCode;
@@ -320,11 +311,11 @@ RCT_EXPORT_METHOD(reservation:(nonnull NSString *)id
                   date1:(nonnull NSDictionary *)date1
                   date2:(nonnull NSDictionary *)date2)
 {
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_RESERVATION];
-    event.date1 = [ self getDateObject:date2];
-    event.date2 = [ self getDateObject:date2];
+    event.date1 = [self getDateObject:date2];
+    event.date2 = [self getDateObject:date2];
     event.quantity = quantity.integerValue;
     event.refId = advertiserRefId;
     event.revenue = revenue.floatValue;
@@ -343,15 +334,15 @@ RCT_EXPORT_METHOD(search:(nonnull NSString *)id
                   date2:(nonnull NSDictionary *)date2
                   eventItems:(nonnull NSArray *)eventItems)
 {
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_SEARCH];
     event.currencyCode = currencyCode;
     event.searchString = searchString;
     event.date1 = [NSDate date];
     event.date2 = [NSDate dateWithTimeIntervalSinceNow:86400];
     event.quantity = quantity.intValue;
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
 
     [Tune measureEvent:event];
 }
@@ -362,18 +353,18 @@ RCT_EXPORT_METHOD(contentView:(nonnull NSString *)id
                   location:(NSDictionary *)location
                   eventItems:(nonnull NSArray *)eventItems)
 {
-    [ self setTuneLocation:location];
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneLocation:location];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_CONTENT_VIEW];
     event.currencyCode = currencyCode;
-    event.eventItems = [ self getEventItems:eventItems];
+    event.eventItems = [self getEventItems:eventItems];
 
     [Tune measureEvent:event];
 }
 
 RCT_EXPORT_METHOD(achievementUnlocked:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType contentId:(nonnull NSString *)contentId)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_ACHIEVEMENT_UNLOCKED];
     event.contentId = contentId;
 
@@ -382,7 +373,7 @@ RCT_EXPORT_METHOD(achievementUnlocked:(nonnull NSString *)id userIdType:(nonnull
 
 RCT_EXPORT_METHOD(levelAchieved:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType level:(nonnull NSNumber *)level)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_LEVEL_ACHIEVED];
     event.level = level.intValue;
 
@@ -391,22 +382,22 @@ RCT_EXPORT_METHOD(levelAchieved:(nonnull NSString *)id userIdType:(nonnull NSStr
 
 RCT_EXPORT_METHOD(spentCredits:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType credits:(nonnull NSNumber *)credits)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_SPENT_CREDITS];
     event.quantity = credits.intValue;
 
     [Tune measureEvent:event];
 }
 
-RCT_EXPORT_METHOD(tutorialComplete:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType) {
+RCT_EXPORT_METHOD(tutorialComplete : (nonnull NSString *)id userIdType : (nonnull NSString *)userIdType) {
 
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     [Tune measureEventName:TUNE_EVENT_TUTORIAL_COMPLETE];
 }
 
 RCT_EXPORT_METHOD(invite:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     [Tune measureEventName:TUNE_EVENT_INVITE];
 }
 
@@ -415,7 +406,7 @@ RCT_EXPORT_METHOD(rated:(nonnull NSString *)id
                   rating:(nonnull NSNumber *)rating
                   contentId:(nonnull NSString *)contentId)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     TuneEvent *event = [TuneEvent eventWithName:TUNE_EVENT_RATED];
     event.rating = rating.floatValue;
     event.contentId = contentId;
@@ -425,7 +416,7 @@ RCT_EXPORT_METHOD(rated:(nonnull NSString *)id
 
 RCT_EXPORT_METHOD(share:(nonnull NSString *)id userIdType:(nonnull NSString *)userIdType)
 {
-    [ self setTuneUserType:id type:userIdType];
+    [self setTuneUserType:id type:userIdType];
     [Tune measureEventName:TUNE_EVENT_SHARE];
 }
 
