@@ -129,17 +129,18 @@
     tEvent.contentType = [RCTConvert NSString:event[@"contentType"]];
     tEvent.contentId = [RCTConvert NSString:event[@"contentId"]];
     tEvent.searchString = [RCTConvert NSString:event[@"searchString"]];
-    attribute1:[RCTConvert NSString:event[@"attribute1"]];
-    attribute2:[RCTConvert NSString:event[@"attribute2"]];
-    attribute3:[RCTConvert NSString:event[@"attribute3"]];
-    attribute4:[RCTConvert NSString:event[@"attribute4"]];
-    attribute5:[RCTConvert NSString:event[@"attribute5"]];
+
+    tEvent.attribute1 = [RCTConvert NSString:event[@"attribute1"]];
+    tEvent.attribute2 = [RCTConvert NSString:event[@"attribute2"]];
+    tEvent.attribute3 = [RCTConvert NSString:event[@"attribute3"]];
+    tEvent.attribute4 = [RCTConvert NSString:event[@"attribute4"]];
+    tEvent.attribute5 = [RCTConvert NSString:event[@"attribute5"]];
 
     return tEvent;
 }
 
--(NSArray *)getEventItems:(NSArray *)eventItems {
-    NSMutableArray *events;
+- (NSArray *)getEventItems:(NSArray *)eventItems {
+    NSMutableArray *events = [NSMutableArray array];
 
     for (NSDictionary *item in eventItems) {
         [events addObject:[ self getEventItem:item]];
