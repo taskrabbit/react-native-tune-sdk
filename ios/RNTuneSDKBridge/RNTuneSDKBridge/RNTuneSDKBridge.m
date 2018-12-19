@@ -7,45 +7,14 @@
 //`
 
 #import "Tune.h"
-#import "TuneEvent.h"
-#import "TuneAdView.h"
-#import "TuneBanner.h"
 #import "TuneLocation.h"
-#import "TuneEventItem.h"
-#import "TuneAdMetadata.h"
-#import "TunePreloadData.h"
-#import "TuneInterstitial.h"
-#import "TuneExperimentDetails.h"
 #import "UIViewController+NameTag.h"
-#import "TunePowerHookExperimentDetails.h"
-#import "TuneInAppMessageExperimentDetails.h"
 
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
 #import "RNTuneSDKBridge.h"
 
 @implementation RNTuneSDKBridge {}
-
-+ (BOOL)requiresMainQueueSetup {
-	return true;
-}
-
-- (instancetype)init
-{
-    if ((self = [super init])) {
-        [ self initializeTune];
-    }
-
-    return self;
-}
-
-- (void)initializeTune {
-    // power hooks only
-    NSDictionary *tuneConfig = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Tune"];
-    NSArray *powerHooks       = [tuneConfig objectForKey:@"powerHooks"];
-    [ self setTunePowerHooks:powerHooks];
-
-}
 
 // START OF THE BRIDGED HELPER METHODS
 - (void)setTuneUserType:(NSString *)id type:(NSString *)type {
@@ -74,25 +43,20 @@
     NSNumber *latitude;
     NSNumber *longitude;
 
-    TuneLocation *loc = [TuneLocation new];
-
     if ((latitude=[location objectForKey:@"latitude"])) {
         latitude = [RCTConvert NSNumber:location[@"latitude"]];
-        loc.latitude = latitude;
     }
 
     if ((longitude=[location objectForKey:@"longitude"])) {
         longitude = [RCTConvert NSNumber:location[@"longitude"]];
-        loc.longitude = longitude;
     }
 
 
     if ((altitude=[location objectForKey:@"altitude"])) {
         altitude = [RCTConvert NSNumber:location[@"altitude"]];
-        loc.altitude = altitude;
     }
 
-    [Tune setLocation:loc];
+	[Tune setLocationWithLatitude:latitude longitude:longitude altitude:altitude];
 }
 
 - (TuneLocation *)getTuneLocation:(NSDictionary *)location {
@@ -202,24 +166,6 @@
     return date;
 }
 
-- (void)setTunePowerHooks:(NSArray *)powerHooks {
-
-    for (NSDictionary *hook in powerHooks) {
-        [ self setHook:hook];
-    }
-
-}
-
-- (void)setHook:(NSDictionary *)hook {
-
-    NSString *hookId = [RCTConvert NSString:hook[@"hookId"]];
-    NSString *hookName  = [RCTConvert NSString:hook[@"hookName"]];
-    NSString *hookDefault   = [RCTConvert NSString:hook[@"hookDefault"]];
-
-    [Tune registerHookWithId:hookId friendlyName:hookName defaultValue:hookDefault];
-
-}
-
 // START OF THE BRIDGED OVER METHODS
 RCT_EXPORT_MODULE(TuneSDKBridge);
 
@@ -227,14 +173,15 @@ RCT_EXPORT_METHOD(measureEvent:(nonnull NSString *)id
                   userIdType:(nonnull NSString *)userIdType
                   tuneEvent:(NSDictionary *)tuneEvent)
 {
+	NSLog(@"fbarthofbartho: measureEventCalled");
     if (!tuneEvent) {
       return;
     }
 
-    [self setTuneUserType:id type:userIdType];
-    
+    [ self setTuneUserType:id type:userIdType];
     TuneEvent *event = [self getTuneEvent:tuneEvent];
     [Tune measureEvent:event];
+	NSLog(@"fbarthofbartho: measureEvent %@", event);
 }
 
 RCT_EXPORT_METHOD(login:(nonnull NSString *)id
@@ -479,82 +426,6 @@ RCT_EXPORT_METHOD(share:(nonnull NSString *)id userIdType:(nonnull NSString *)us
 {
     [ self setTuneUserType:id type:userIdType];
     [Tune measureEventName:TUNE_EVENT_SHARE];
-}
-
-RCT_REMAP_METHOD(getPowerHookValues,
-                 hookIds:(nonnull NSArray *)hookIds
-                 resolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
-    NSMutableDictionary *hookValues = [[NSMutableDictionary alloc] init];
-
-    for (NSString *hookId in hookIds) {
-        hookValues[hookId] = [Tune getValueForHookById:hookId];
-    }
-
-
-    if (hookValues) {
-        resolve(hookValues);
-    } else {
-        NSError *error = [NSError errorWithDomain:@"Tune Hook Values Erorr" code:404 userInfo:nil];
-        reject(@"no_events", @"There were no events", error);
-    }
-}
-
-// Custom User Profile
-
-RCT_EXPORT_METHOD(registerCustomProfileString:(NSString *)name value:(NSString *)value)
-{
-    [Tune registerCustomProfileString:name withDefault:value];
-}
-
-RCT_EXPORT_METHOD(registerCustomProfileDate:(NSString *)name value:(NSDictionary *)value)
-{
-    NSDate *date = [self getDateObject:value];
-    [Tune registerCustomProfileDateTime:name withDefault:date];
-}
-
-RCT_EXPORT_METHOD(registerCustomProfileNumber:(NSString *)name value:(NSNumber *)value)
-{
-    [Tune registerCustomProfileNumber:name withDefault:value];
-}
-
-RCT_EXPORT_METHOD(registerCustomProfileGeolocation:(NSString *)name value:(NSDictionary *)value)
-{
-    TuneLocation *loc = [self getTuneLocation:value];
-    [Tune registerCustomProfileGeolocation:name withDefault:loc];
-}
-
-RCT_EXPORT_METHOD(setCustomProfileStringValue:(NSString *)name value:(NSString *)value)
-{
-    [Tune setCustomProfileStringValue:value forVariable:name];
-}
-
-RCT_EXPORT_METHOD(setCustomProfileDateTimeValue:(NSString *)name value:(NSDictionary *)value)
-{
-    NSDate *date = [self getDateObject:value];
-    [Tune setCustomProfileDateTimeValue:date forVariable:name];
-}
-
-RCT_EXPORT_METHOD(setCustomProfileNumberValue:(NSString *)name value:(NSNumber *)value)
-{
-    [Tune setCustomProfileNumberValue:value forVariable:name];
-}
-
-RCT_EXPORT_METHOD(setCustomProfileGeolocationValue:(NSString *)name value:(NSDictionary *)value)
-{
-    TuneLocation *loc = [self getTuneLocation:value];
-    [Tune setCustomProfileGeolocationValue:loc forVariable:name];
-}
-
-RCT_EXPORT_METHOD(clearCustomProfileVariable:(nonnull NSString *)name)
-{
-    [Tune clearCustomProfileVariable:name];
-}
-
-RCT_EXPORT_METHOD(clearAllCustomProfileVariables)
-{
-    [Tune clearAllCustomProfileVariables];
 }
 
 @end
