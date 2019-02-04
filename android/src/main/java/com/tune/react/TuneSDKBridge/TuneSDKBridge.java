@@ -1,33 +1,30 @@
 package com.tune.react.TuneSDKBridge;
 
  import com.tune.Tune;
+ import com.tune.ITune;
  import com.tune.TuneEvent;
  import com.tune.TuneGender;
- import com.tune.TuneLocation;
  import com.tune.TuneEventItem;
 
  import java.util.ArrayList;
  import java.util.Date;
  import java.util.GregorianCalendar;
  import java.util.List;
- import java.lang.System;
 
  import android.location.Location;
+ import android.util.Log;
 
- import com.facebook.react.bridge.Arguments;
- import com.facebook.react.bridge.Promise;
  import com.facebook.react.bridge.ReactMethod;
  import com.facebook.react.bridge.ReadableMap;
  import com.facebook.react.bridge.ReadableArray;
  import com.facebook.react.bridge.ReactApplicationContext;
  import com.facebook.react.bridge.ReactContextBaseJavaModule;
- import com.facebook.react.bridge.WritableMap;
 
  public class TuneSDKBridge extends ReactContextBaseJavaModule {
 
      public TuneSDKBridge(ReactApplicationContext reactContext) {
          super(reactContext);
-         System.out.println("TuneSDKBridge constructor");
+         // Log.d(TuneSDKBridge.class.getName(), "TuneSDKBridge constructor");
      }
 
      @Override
@@ -37,8 +34,8 @@ package com.tune.react.TuneSDKBridge;
 
      @ReactMethod
      public void login(String id,String userIdType,String email, String name, Integer age, String gender, ReadableMap location) {
-         System.out.println(" TuneSDKBridge.login");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.login");
+         ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
          this.setUserId(tune, userIdType, id);
@@ -53,8 +50,8 @@ package com.tune.react.TuneSDKBridge;
 
      @ReactMethod
      public void registration(String id,String userIdType, String email, String name, Integer age, String gender, ReadableMap location) {
-         System.out.println(" TuneSDKBridge.registration");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.registration");
+         ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
          this.setUserId(tune, userIdType, id);
@@ -69,8 +66,8 @@ package com.tune.react.TuneSDKBridge;
      // eCommerce
      @ReactMethod
      public void addToCart(String id,String userIdType, String gender, Integer age, Float revenue, String currencyCode,ReadableMap location, ReadableArray eventItems) {
-         System.out.println(" TuneSDKBridge.addToCart");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToCart");
+         ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
          this.setUserId(tune, userIdType, id);
@@ -87,20 +84,21 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void addToWishList(String id, String userIdType, String currencyCode, ReadableMap location, ReadableArray eventItems) {
-         System.out.println(" TuneSDKBridge.addToWishlist");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToWishlist");
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.setLocation(this.getLocation(location));
-         tune.setCurrencyCode(currencyCode);
-         tune.measureEvent(new TuneEvent(TuneEvent.ADD_TO_WISHLIST).withEventItems(this.getTuneEventItemList(eventItems)));
+         TuneEvent tuneEvent = new TuneEvent(TuneEvent.ADD_TO_WISHLIST).withEventItems(this.getTuneEventItemList(eventItems));
+         tuneEvent.withCurrencyCode(currencyCode);
+         tune.measureEvent(tuneEvent);
      }
 
      //
      @ReactMethod
      public void addedPaymentInfo(String id, String userIdType) {
-         System.out.println(" TuneSDKBridge.addedPaymentInfo");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addedPaymentInfo");
+         ITune tune = Tune.getInstance();
          this.setUserId(tune, userIdType, id);
 
          tune.measureEvent(TuneEvent.ADDED_PAYMENT_INFO);
@@ -109,8 +107,8 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void checkoutInitiated(String id, String userIdType, Float revenue, String currencyCode, String advertiserRefId, ReadableMap location, ReadableArray eventItems) {
-         System.out.println(" TuneSDKBridge.checkoutInitiated");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.checkoutInitiated");
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.setLocation(this.getLocation(location));
@@ -124,8 +122,8 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void purchase(String id, String userIdType,  Float revenue, String currencyCode, String advertiserRefId, ReadableMap location, ReadableArray eventItems) {
-         System.out.println(" TuneSDKBridge.purchase");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.purchase");
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.setLocation(this.getLocation(location));
@@ -139,8 +137,8 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void reservation(String id, String userIdType, String gender, Integer age, Float revenue, Integer quantity, String currencyCode, String advertiserRefId, ReadableMap location, ReadableMap date1, ReadableMap date2) {
-         System.out.println(" TuneSDKBridge.reservation");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.reservation");
+         ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
          this.setUserId(tune, userIdType, id);
@@ -159,8 +157,8 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void search (String id, String userIdType, String currencyCode, String searchString, Integer quantity, ReadableMap location, ReadableMap date1, ReadableMap date2, ReadableArray eventItems) {
-         System.out.println(" TuneSDKBridge.search");
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.search");
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.setLocation(this.getLocation(location));
@@ -176,18 +174,20 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void contentView (String id, String userIdType, String currencyCode, ReadableMap location, ReadableArray eventItems) {
-         Tune tune = Tune.getInstance();
+         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.contentView");
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.setLocation(this.getLocation(location));
-         tune.setCurrencyCode(currencyCode);
-         tune.measureEvent(new TuneEvent(TuneEvent.CONTENT_VIEW).withEventItems(this.getTuneEventItemList(eventItems)));
+         TuneEvent tuneEvent = new TuneEvent(TuneEvent.CONTENT_VIEW).withEventItems(this.getTuneEventItemList(eventItems));
+         tuneEvent.withCurrencyCode(currencyCode);
+         tune.measureEvent(tuneEvent);
      }
 
      //
      @ReactMethod
      public void achievementUnlocked (String id, String userIdType, String contentId) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(new TuneEvent(TuneEvent.ACHIEVEMENT_UNLOCKED).withContentId(contentId));
      }
@@ -195,7 +195,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void levelAchieved (String id, String userIdType, Integer level) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(new TuneEvent(TuneEvent.LEVEL_ACHIEVED).withLevel(level));
@@ -204,7 +204,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void spentCredits (String id, String userIdType, Integer credits) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(new TuneEvent(TuneEvent.SPENT_CREDITS).withQuantity(credits));
@@ -213,7 +213,7 @@ package com.tune.react.TuneSDKBridge;
      // tutorial complete Methods
      @ReactMethod
      public void tutorialComplete (String id, String userIdType) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(TuneEvent.TUTORIAL_COMPLETE);
@@ -222,7 +222,7 @@ package com.tune.react.TuneSDKBridge;
      // invite Methods
      @ReactMethod
      public void invite (String id, String userIdType) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune,userIdType, id);
          tune.measureEvent(TuneEvent.INVITE);
@@ -231,7 +231,7 @@ package com.tune.react.TuneSDKBridge;
      // rated Method
      @ReactMethod
      public void rated (String id, String userIdType, Float rating, String contentId) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(new TuneEvent(TuneEvent.RATED)
@@ -242,37 +242,13 @@ package com.tune.react.TuneSDKBridge;
      // Share Methods
      @ReactMethod
      public void share (String id, String userIdType) {
-         Tune tune = Tune.getInstance();
+         ITune tune = Tune.getInstance();
          this.setUserId(tune, userIdType, id);
          tune.measureEvent(TuneEvent.SHARE);
      }
 
-     // POWER HOOK METHODS
-     @ReactMethod
-     public void getPowerHookValues( ReadableArray hookIds, Promise promise) {
-         System.out.println(" TuneSDKBridge.getPowerHookValues");
-         Tune tune = Tune.getInstance();
-         WritableMap hookValues = Arguments.createMap();
-
-         try {
-
-             for (int i = 0; i < hookIds.size(); i++) {
-                 System.out.println("TuneSDKBridge.getPowerHookValues: " + hookIds.getString(i));
-                 hookValues.putString(hookIds.getString(i), tune.getValueForHookById(hookIds.getString(i) ) );
-             }
-
-             promise.resolve(hookValues);
-
-         } catch (Exception e) {
-             System.out.println( e );
-         }
-     }
-
-     //
-
-
      // PRIVATE HELPER METHODS
-     private void setUserId(Tune tune, String userIdType, String id ) {
+     private void setUserId(ITune tune, String userIdType, String id ) {
          switch( userIdType ) {
              case "facebook" : tune.setFacebookUserId(id);break;
              case "google"   : tune.setGoogleUserId(id); break;
@@ -293,15 +269,33 @@ package com.tune.react.TuneSDKBridge;
      }
 
      private TuneEventItem getTuneEventItem(ReadableMap eventMap ) {
-         return new TuneEventItem(eventMap.getString("itemName"))
-                 .withUnitPrice(eventMap.getDouble("unitPrice"))
-                 .withQuantity(eventMap.getInt("quantity"))
-                 .withRevenue(eventMap.getDouble("revenue"))
-                 .withAttribute1(eventMap.getString("attribute1"))
-                 .withAttribute2(eventMap.getString("attribute2"))
-                 .withAttribute3(eventMap.getString("attribute3"))
-                 .withAttribute4(eventMap.getString("attribute4"))
-                 .withAttribute5(eventMap.getString("attribute5"));
+         TuneEventItem tuneEventItem = new TuneEventItem(eventMap.getString("itemName"));
+
+         if (eventMap.hasKey("attribute1")) {
+             tuneEventItem.withAttribute1(eventMap.getString("attribute1"));
+         }
+         if (eventMap.hasKey("attribute2")) {
+             tuneEventItem.withAttribute2(eventMap.getString("attribute2"));
+         }
+         if (eventMap.hasKey("attribute3")) {
+             tuneEventItem.withAttribute3(eventMap.getString("attribute3"));
+         }
+         if (eventMap.hasKey("attribute4")) {
+             tuneEventItem.withAttribute4(eventMap.getString("attribute4"));
+         }
+         if (eventMap.hasKey("attribute5")) {
+             tuneEventItem.withAttribute5(eventMap.getString("attribute5"));
+         }
+         if (eventMap.hasKey("unitPrice")) {
+             tuneEventItem.withUnitPrice(eventMap.getDouble("unitPrice"));
+         }
+         if (eventMap.hasKey("quantity")) {
+             tuneEventItem.withQuantity(eventMap.getInt("quantity"));
+         }
+         if (eventMap.hasKey("revenue")) {
+             tuneEventItem.withRevenue(eventMap.getDouble("revenue"));
+         }
+         return tuneEventItem;
      }
 
      private Location getLocation ( ReadableMap loc ) {
@@ -316,10 +310,6 @@ package com.tune.react.TuneSDKBridge;
          }
 
          return location;
-     }
-
-     private TuneLocation getTuneLocation (ReadableMap loc) {
-         return new TuneLocation(this.getLocation(loc));
      }
 
      private Date getDate(ReadableMap date) {
