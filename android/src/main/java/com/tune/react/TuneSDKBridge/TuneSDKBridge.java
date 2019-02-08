@@ -34,7 +34,7 @@ package com.tune.react.TuneSDKBridge;
 
      @ReactMethod
      public void login(String id,String userIdType,String email, String name, Integer age, String gender, ReadableMap location) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.login");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.login");
          ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
@@ -50,7 +50,7 @@ package com.tune.react.TuneSDKBridge;
 
      @ReactMethod
      public void registration(String id,String userIdType, String email, String name, Integer age, String gender, ReadableMap location) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.registration");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.registration");
          ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
@@ -66,7 +66,7 @@ package com.tune.react.TuneSDKBridge;
      // eCommerce
      @ReactMethod
      public void addToCart(String id,String userIdType, String gender, Integer age, Float revenue, String currencyCode,ReadableMap location, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToCart");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToCart");
          ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
@@ -84,7 +84,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void addToWishList(String id, String userIdType, String currencyCode, ReadableMap location, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToWishlist");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addToWishlist");
          ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
@@ -97,7 +97,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void addedPaymentInfo(String id, String userIdType) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addedPaymentInfo");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.addedPaymentInfo");
          ITune tune = Tune.getInstance();
          this.setUserId(tune, userIdType, id);
 
@@ -107,7 +107,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void checkoutInitiated(String id, String userIdType, Float revenue, String currencyCode, String advertiserRefId, ReadableMap location, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.checkoutInitiated");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.checkoutInitiated");
          ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
@@ -122,7 +122,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void purchase(String id, String userIdType,  Float revenue, String currencyCode, String advertiserRefId, ReadableMap location, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.purchase");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.purchase");
          ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
@@ -137,7 +137,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void reservation(String id, String userIdType, String gender, Integer age, Float revenue, Integer quantity, String currencyCode, String advertiserRefId, ReadableMap location, ReadableMap date1, ReadableMap date2) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.reservation");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.reservation");
          ITune tune = Tune.getInstance();
          TuneGender tuneGender = ( gender.equals("MALE") ) ? TuneGender.MALE : TuneGender.FEMALE;
 
@@ -157,7 +157,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void search (String id, String userIdType, String currencyCode, String searchString, Integer quantity, ReadableMap location, ReadableMap date1, ReadableMap date2, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.search");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.search");
          ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
@@ -174,7 +174,7 @@ package com.tune.react.TuneSDKBridge;
      //
      @ReactMethod
      public void contentView (String id, String userIdType, String currencyCode, ReadableMap location, ReadableArray eventItems) {
-         Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.contentView");
+         // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.contentView");
          ITune tune = Tune.getInstance();
 
          this.setUserId(tune, userIdType, id);
