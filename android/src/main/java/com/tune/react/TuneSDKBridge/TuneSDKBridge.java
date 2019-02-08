@@ -272,28 +272,28 @@ package com.tune.react.TuneSDKBridge;
          TuneEventItem tuneEventItem = new TuneEventItem(eventMap.getString("itemName"));
 
          if (eventMap.hasKey("attribute1")) {
-             tuneEventItem.withAttribute1(eventMap.getString("attribute1"));
+             tuneEventItem = tuneEventItem.withAttribute1(eventMap.getString("attribute1"));
          }
          if (eventMap.hasKey("attribute2")) {
-             tuneEventItem.withAttribute2(eventMap.getString("attribute2"));
+             tuneEventItem = tuneEventItem.withAttribute2(eventMap.getString("attribute2"));
          }
          if (eventMap.hasKey("attribute3")) {
-             tuneEventItem.withAttribute3(eventMap.getString("attribute3"));
+             tuneEventItem = tuneEventItem.withAttribute3(eventMap.getString("attribute3"));
          }
          if (eventMap.hasKey("attribute4")) {
-             tuneEventItem.withAttribute4(eventMap.getString("attribute4"));
+             tuneEventItem = tuneEventItem.withAttribute4(eventMap.getString("attribute4"));
          }
          if (eventMap.hasKey("attribute5")) {
-             tuneEventItem.withAttribute5(eventMap.getString("attribute5"));
+             tuneEventItem = tuneEventItem.withAttribute5(eventMap.getString("attribute5"));
          }
          if (eventMap.hasKey("unitPrice")) {
-             tuneEventItem.withUnitPrice(eventMap.getDouble("unitPrice"));
+             tuneEventItem = tuneEventItem.withUnitPrice(eventMap.getDouble("unitPrice"));
          }
          if (eventMap.hasKey("quantity")) {
-             tuneEventItem.withQuantity(eventMap.getInt("quantity"));
+             tuneEventItem = tuneEventItem.withQuantity(eventMap.getInt("quantity"));
          }
          if (eventMap.hasKey("revenue")) {
-             tuneEventItem.withRevenue(eventMap.getDouble("revenue"));
+             tuneEventItem = tuneEventItem.withRevenue(eventMap.getDouble("revenue"));
          }
          return tuneEventItem;
      }
