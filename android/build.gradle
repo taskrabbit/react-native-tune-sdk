@@ -16,8 +16,8 @@ android {
 }
 
 dependencies {
-    implementation "com.facebook.react:react-native:${safeGetExt("reactNativeVersion", "0.15.+")}"
+    implementation "com.facebook.react:react-native:0.15.+"
     implementation "com.tune:tune-marketing-console-sdk:6.0.3"
-    implementation "com.google.android.gms:play-services-ads:${safeGetExt("googlePlayServicesAdsVersion", "16.0.0")}"
-    implementation "com.google.android.gms:play-services-gcm:${safeGetExt("googlePlayServicesGcmVersion", "16.0.0")}"
+    implementation "com.google.android.gms:play-services-ads:16.+"
+    implementation "com.google.android.gms:play-services-gcm:16.+"
 }
