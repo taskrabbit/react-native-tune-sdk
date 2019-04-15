@@ -33,6 +33,22 @@ package com.tune.react.TuneSDKBridge;
      }
 
      @ReactMethod
+     public void measureEvent(String id, String userIdType, ReadableMap eventMap) {
+         if (eventMap == null) {
+             return;
+         }
+
+         TuneEvent tuneEvent = this.getTuneEvent(eventMap);
+         if (tuneEvent == null) {
+             return;
+         }
+
+         ITune tune = Tune.getInstance();
+         this.setUserId(tune, userIdType, id);
+         tune.measureEvent(tuneEvent);
+     }
+
+     @ReactMethod
      public void login(String id,String userIdType,String email, String name, Integer age, String gender, ReadableMap location) {
          // Log.d(TuneSDKBridge.class.getName()," TuneSDKBridge.login");
          ITune tune = Tune.getInstance();
@@ -319,5 +335,71 @@ package com.tune.react.TuneSDKBridge;
          } else {
              return null;
          }
+     }
+
+     private TuneEvent getTuneEvent(ReadableMap eventMap) {
+         if (eventMap == null || !eventMap.hasKey("eventName")) {
+             return null;
+         }
+
+         TuneEvent tuneEvent = new TuneEvent(eventMap.getString("eventName"));
+         if (eventMap.hasKey("eventItems")) {
+             tuneEvent = tuneEvent.withEventItems(this.getTuneEventItemList(eventMap.getArray("eventItems")));
+         }
+         if (eventMap.hasKey("date1")) {
+             tuneEvent = tuneEvent.withDate1(this.getDate(eventMap.getMap("date1")));
+         }
+         if (eventMap.hasKey("date2")) {
+             tuneEvent = tuneEvent.withDate2(this.getDate(eventMap.getMap("date2")));
+         }
+         if (eventMap.hasKey("revenue")) {
+             tuneEvent = tuneEvent.withRevenue(eventMap.getDouble("revenue"));
+         }
+         if (eventMap.hasKey("rating")) {
+             tuneEvent = tuneEvent.withRating(eventMap.getDouble("rating"));
+         }
+         if (eventMap.hasKey("quantity")) {
+             tuneEvent = tuneEvent.withQuantity(eventMap.getInt("quantity"));
+         }
+         if (eventMap.hasKey("level")) {
+             tuneEvent = tuneEvent.withLevel(eventMap.getInt("level"));
+         }
+         if (eventMap.hasKey("currencyCode")) {
+             tuneEvent = tuneEvent.withCurrencyCode(eventMap.getString("currencyCode"));
+         }
+         if (eventMap.hasKey("refId")) {
+             tuneEvent = tuneEvent.withAdvertiserRefId(eventMap.getString("refId"));
+         }
+
+         // Could not figure out which data to use (from the ReadableMap) for `receipt`
+         // Expected a `receiptData` and `receiptSignature` as strings (see below)
+         // tuneEvent.withReceipt(java.lang.String receiptData, java.lang.String receiptSignature)
+
+         if (eventMap.hasKey("contentType")) {
+             tuneEvent = tuneEvent.withContentType(eventMap.getString("contentType"));
+         }
+         if (eventMap.hasKey("contentId")) {
+             tuneEvent = tuneEvent.withContentId(eventMap.getString("contentId"));
+         }
+         if (eventMap.hasKey("searchString")) {
+             tuneEvent = tuneEvent.withSearchString(eventMap.getString("searchString"));
+         }
+         if (eventMap.hasKey("attribute1")) {
+             tuneEvent = tuneEvent.withAttribute1(eventMap.getString("attribute1"));
+         }
+         if (eventMap.hasKey("attribute2")) {
+             tuneEvent = tuneEvent.withAttribute2(eventMap.getString("attribute2"));
+         }
+         if (eventMap.hasKey("attribute3")) {
+             tuneEvent = tuneEvent.withAttribute3(eventMap.getString("attribute3"));
+         }
+         if (eventMap.hasKey("attribute4")) {
+             tuneEvent = tuneEvent.withAttribute4(eventMap.getString("attribute4"));
+         }
+         if (eventMap.hasKey("attribute5")) {
+             tuneEvent = tuneEvent.withAttribute5(eventMap.getString("attribute5"));
+         }
+
+         return tuneEvent;
      }
  }
